@@ -17,11 +17,12 @@ object Main {
     */
 
   def pascal(c: Int, r: Int): Int = (c, r) match {
-    case (c, r) if c < 0 || r < 0 => throw new NumberFormatException()
-    case (0, _)                   => 1
-    case (_, 0)                   => 1
-    case (c, r) if c == r         => 1
-    case (c, r)                   => pascal(c - 1, r - 1) + pascal(c, r - 1)
+    case (c, r) if c < 0 || r < 0 =>
+      throw new NumberFormatException("Negative integers are not supported.")
+    case (0, _)           => 1
+    case (_, 0)           => 1
+    case (c, r) if c == r => 1
+    case (c, r)           => pascal(c - 1, r - 1) + pascal(c, r - 1)
   }
 
   /** Exercise 2
