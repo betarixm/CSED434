@@ -37,8 +37,8 @@ object Main {
     @tailrec
     def isBalance(chars: List[Char], count: Int, flag: Boolean): Boolean =
       (chars, count) match {
-        case (Nil, _)                                        => flag
-        case (head :: _, count) if head == ')' && count <= 0 => false
+        case (Nil, _)                        => flag
+        case (')' :: _, count) if count <= 0 => false
         case (head :: tail, count) =>
           isBalance(
             tail,
