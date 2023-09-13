@@ -17,7 +17,7 @@ object FunSets {
 
   /** Returns the set of the one given element.
     */
-  def singletonSet(elem: Int): Set = ???
+  def singletonSet(elem: Int): Set = _ == elem
 
   /** Returns the union of the two given sets,
     * the sets of all elements that are in either `s` or `t`.
