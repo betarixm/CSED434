@@ -59,7 +59,7 @@ abstract class TweetSet {
     * Question: Should we implment this method here, or should it remain abstract
     * and be implemented in the subclasses?
     */
-  def mostRetweeted: Tweet = ???
+  def mostRetweeted: Tweet
 
   /** Returns a list containing all tweets of this set, sorted by retweet count
     * in descending order. In other words, the head of the resulting list should
@@ -100,6 +100,8 @@ class Empty extends TweetSet {
 
   override def union(that: TweetSet): TweetSet = that
 
+  override def mostRetweeted: Tweet = throw new NoSuchElementException
+
 
   /** The following methods are already implemented
     */
@@ -123,6 +125,17 @@ class NonEmpty(elem: Tweet, left: TweetSet, right: TweetSet) extends TweetSet {
 
   override def union(that: TweetSet): TweetSet =
     filterAcc(!that.contains(_), that)
+
+  private def isEmpty: TweetSet => Boolean = {
+    case _: Empty => true
+    case _        => false
+  }
+  override def mostRetweeted: Tweet =
+    List(left, right)
+      .filter(!isEmpty(_))
+      .map(_.mostRetweeted)
+      .+:(elem)
+      .maxBy(_.retweets)
 
 
   /** The following methods are already implemented
