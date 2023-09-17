@@ -70,3 +70,42 @@
 - Javadocs in Nonpublic Code
   - 공개하지 않을 코드라면 Javadocs는 코드만 산만하게 만들 뿐이다.
 
+## Chapter 7. Error Handling
+
+### Use Exceptions Rather Than Return Codes
+
+- 오류 코드를 반환하기보다 예외를 발생시키는 편이 호출자 코드를 더 깔끔하게 만든다.
+- 즉, 비즈니스 로직과 예외를 처리하는 로직을 분리할 수 있다.
+
+### Write Your Try-Catch-Finally Statement First
+
+- 예외가 발생할 코드를 작성할 때에는 먼저 try-catch-finally 블록을 작성하여 프로그램의 상태를 일관성 있게 유지할 수 있도록 해야 한다.
+- 호출자가 기대하는 상태를 유지하기 쉬워진다.
+
+### Use Unchecked Exceptions
+
+- 확인된 예외는 호출 체인의 모든 함수의 시그니처를 수정해야하는 비용을 동반한다.
+- 즉, 모든 함수가 하위 함수에서 발생시키는 예외의 종류를 알아야하기 때문에 캡슐화가 깨진다.
+
+### Provide Context with Exceptions
+
+- 예외에 전후 상황을 담아서 함께 던지는 것이 코드의 의도를 파악하는데 도움이 된다.
+
+### Define Exception Classes in Terms of a Caller’s Needs
+
+- 예를 들어, 외부 라이브러리 호출에서 발생할 수 있는 오류를 종류별로 핸들링하기 보다 하나로 묶어서 핸들링하는 것이 좋다.
+- 왜냐하면 이 상황에서 우리가 예외를 잡을 구간은 어차피 하나이기 때문이다.
+- 또한, 다른 API의 설계에 발목 잡히지 않는다.
+
+### Define the Normal Flow
+
+- 예외에 따른 중단이 코드를 장황하게 만든다면, 특수 사례 패턴을 통해 더 간결하게 만들 수 있다.
+
+### Don’t Return Null
+
+- `null`을 반환하는 코드는 작성해야할 코드를 증가시킬 뿐만 아니라 호출자에게 책임을 맡긴다.
+- 외부 라이브러리가 `null`을 반환한다면 감싸서 예외를 던지거나 특수 사례 객체를 반환하자.
+
+### Don’t Pass Null
+
+- `null`을 인수로 받을 수 있도록 설계된 언어가 아니라면 `null`의 전달은 최대한 피해야한다.
