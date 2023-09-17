@@ -2,6 +2,8 @@ package patmat
 
 import common._
 
+import scala.annotation.tailrec
+
 /** Assignment 4: Huffman coding
   */
 object Huffman {
@@ -130,7 +132,9 @@ object Huffman {
     *    the example invocation. Also define the return type of the `until` function.
     *  - try to find sensible parameter names for `xxx`, `yyy` and `zzz`.
     */
-  def until(xxx: ???, yyy: ???)(zzz: ???): ??? = ???
+  @tailrec
+  def until[T](satisfied: T => Boolean, map: T => T)(value: T): T =
+    if (satisfied(value)) value else until(satisfied, map)(map(value))
 
   /** This function creates a code tree which is optimal to encode the text `chars`.
     *
