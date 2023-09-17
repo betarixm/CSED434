@@ -342,7 +342,14 @@ object Huffman {
     * a valid code tree that can be represented as a code table. Using the code tables of the
     * sub-trees, think of how to build the code table for the entire tree.
     */
-  def convert(tree: CodeTree): CodeTable = ???
+  def convert(tree: CodeTree): CodeTable = tree match {
+    case Leaf(char, _) => List((char, Nil))
+    case Fork(left, right, _, _) =>
+      mergeCodeTables(
+        convert(left).map({ case (c, bits) => (c, 0 :: bits) }),
+        convert(right).map({ case (c, bits) => (c, 1 :: bits) })
+      )
+  }
 
   /** This function takes two code tables and merges them into one. Depending on how you
     * use it in the `convert` method above, this merge method might also do some transformations
