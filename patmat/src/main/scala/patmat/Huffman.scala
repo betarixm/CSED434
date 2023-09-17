@@ -298,7 +298,29 @@ object Huffman {
   /** This function encodes `text` using the code tree `tree`
     * into a sequence of bits.
     */
-  def encode(tree: CodeTree)(text: List[Char]): List[Bit] = ???
+
+  @tailrec
+  private def encodeFirstChar(
+      tree: CodeTree,
+      char: Char,
+      path: List[Bit] = List()
+  ): List[Bit] = tree match {
+    case Leaf(_, _) => path
+    case Fork(left, right, _, _) =>
+      if (chars(left).contains(char)) {
+        encodeFirstChar(left, char, path :+ 0)
+      } else if (chars(right).contains(char)) {
+        encodeFirstChar(right, char, path :+ 1)
+      } else {
+        throw new NoSuchElementException(s"$char is not a part of tree.")
+      }
+  }
+
+  def encode(tree: CodeTree)(text: List[Char]): List[Bit] = text match {
+    case Nil => Nil
+    case first :: remains =>
+      encodeFirstChar(tree, first) ::: encode(tree)(remains)
+  }
 
   // Part 4b: Encoding using code table
 
