@@ -82,7 +82,7 @@ object Huffman {
     */
   def times(chars: List[Char]): List[(Char, Int)] =
     chars
-      .groupBy(x => x)
+      .groupBy(identity)
       .map({ case (c, chars) => (c, chars.size) })
       .toList
 
