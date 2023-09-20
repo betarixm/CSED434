@@ -41,7 +41,11 @@ trait Solver extends GameDef {
   def newNeighborsOnly(
       neighbors: Stream[(Block, List[Move])],
       explored: Set[Block]
-  ): Stream[(Block, List[Move])] = ???
+  ): Stream[(Block, List[Move])] =
+    neighbors
+      .filter({ case (block, _) =>
+        !explored.contains(block)
+      })
 
   /** The function `from` returns the stream of all possible paths
     * that can be followed, starting at the `head` of the `initial`
