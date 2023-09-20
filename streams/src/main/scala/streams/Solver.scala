@@ -72,7 +72,17 @@ trait Solver extends GameDef {
   def from(
       initial: Stream[(Block, List[Move])],
       explored: Set[Block]
-  ): Stream[(Block, List[Move])] = ???
+  ): Stream[(Block, List[Move])] = initial match {
+    case Stream.Empty => Stream.empty
+    case (block, moves) #:: tail =>
+      val nextOnlyNewNeighborsWithHistory =
+        newNeighborsOnly(neighborsWithHistory(block, moves), explored)
+
+      nextOnlyNewNeighborsWithHistory #::: from(
+        tail #::: nextOnlyNewNeighborsWithHistory,
+        explored ++ nextOnlyNewNeighborsWithHistory.map(_._1)
+      )
+  }
 
   /** The stream of all paths that begin at the starting block.
     */
