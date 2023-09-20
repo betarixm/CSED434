@@ -28,7 +28,11 @@ trait Solver extends GameDef {
   def neighborsWithHistory(
       b: Block,
       history: List[Move]
-  ): Stream[(Block, List[Move])] = ???
+  ): Stream[(Block, List[Move])] =
+    b.legalNeighbors.toStream
+      .map({ case (block, move) =>
+        (block, move :: history)
+      })
 
   /** This function returns the list of neighbors without the block
     * positions that have already been explored. We will use it to
