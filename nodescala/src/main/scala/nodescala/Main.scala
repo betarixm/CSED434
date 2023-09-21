@@ -40,7 +40,9 @@ object Main {
     // TO IMPLEMENT
     // 5. unsubscribe from the server
     terminationRequested onSuccess { case msg =>
-      ???
+      println(msg)
+      myServerSubscription.unsubscribe()
+      println("Bye!")
     }
   }
 
