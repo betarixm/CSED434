@@ -38,7 +38,12 @@ trait NodeScala {
       exchange: Exchange,
       token: CancellationToken,
       response: Response
-  ): Unit = ???
+  ): Unit = {
+    while (token.nonCancelled && response.hasNext) {
+      exchange write response.next
+    }
+    exchange.close()
+  }
 
   /** A server:
     *  1) creates and starts an http listener
